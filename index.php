@@ -2,7 +2,7 @@
 require 'conn.php';
 
 if (isset($_POST['btnSend']) && $_POST['btnSend'] === 'send') {
-    $message = $_POST['userMessage'];
+    $message = mysqli_real_escape_string($conn, $_POST['userMessage']);
     $send_message = "INSERT INTO `23bca699`.`chat` (messages) VALUES ('$message')";
     mysqli_query($conn, $send_message);
     mysqli_query($conn, "DELETE FROM `23bca699`.`chat` WHERE id NOT IN (SELECT id FROM (SELECT id FROM `23bca699`.`chat` ORDER BY id DESC LIMIT 30) AS temp)");
